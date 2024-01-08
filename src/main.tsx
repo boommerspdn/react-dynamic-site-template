@@ -12,7 +12,7 @@ import HomePage from "./routes/root/page";
 import AboutPage from "./routes/about-page/page";
 import ErrorPage from "./components/error-page";
 import NotFoundPage from "./components/not-found-page";
-import { fetchContent } from "./lib/data";
+import { fetchContent, fetchMultipleContent } from "./lib/data";
 import { PostType } from "./types";
 
 const rootRoute = new RootRoute({
@@ -23,6 +23,7 @@ const indexRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/",
   component: () => <HomePage />,
+  loader: () => fetchMultipleContent(),
   pendingComponent: () => <>loading...</>,
   errorComponent: () => <ErrorPage />
 });
