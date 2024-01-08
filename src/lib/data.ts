@@ -15,7 +15,7 @@ export const useFetch = <T>(url: string, query: object | null | undefined) => {
   );
 
   return {
-    user: data,
+    data,
     isLoading,
     isError: error,
   };
