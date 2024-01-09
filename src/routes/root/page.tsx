@@ -11,7 +11,12 @@ const HomePage = () => {
   console.log(comment);
   console.log(post);
 
-  return <div></div>;
+  return (
+    <div>
+      {JSON.stringify(comment)}
+      <div>{JSON.stringify(post)}</div>
+    </div>
+  );
 };
 
 export default HomePage;
