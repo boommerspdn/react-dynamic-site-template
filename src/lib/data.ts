@@ -5,7 +5,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export const fetchContent = async (
   path: string,
-  query: object | null | undefined
+  query: object | null | undefined,
 ) => {
   let q = "";
   if (typeof query === "object") {
@@ -22,10 +22,13 @@ export const fetchMultipleContent = async () => {
     fetcher(`${import.meta.env.VITE_API_URL}/posts`),
   ]);
 
-  return { comment, post };    
-}
+  return { comment, post };
+};
 
-export const useSWRFetch = <T>(url: string, query: object | null | undefined) => {
+export const useSWRFetch = <T>(
+  url: string,
+  query: object | null | undefined,
+) => {
   let q = "";
   if (typeof query === "object") {
     q = qs.stringify(query);
@@ -33,7 +36,7 @@ export const useSWRFetch = <T>(url: string, query: object | null | undefined) =>
 
   const { data, error, isLoading } = useSWR<T>(
     `${import.meta.env.VITE_API_URL}${url}?${q}`,
-    fetcher
+    fetcher,
   );
 
   return {

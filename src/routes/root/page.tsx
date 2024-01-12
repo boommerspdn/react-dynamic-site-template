@@ -12,7 +12,7 @@ const HomePage = () => {
   console.log(post);
 
   return (
-    <div>
+    <div className="flex pt-2">
       {JSON.stringify(comment)}
       <div>{JSON.stringify(post)}</div>
     </div>
