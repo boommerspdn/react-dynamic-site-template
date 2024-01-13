@@ -8,9 +8,11 @@ import Post from "./components/post";
 const HomePage = () => {
   const [input, setInput] = useState("");
 
-  const { data: posts } = useReactQueryGet<PostType[]>("/posts", null, [
-    "posts",
-  ]);
+  const { data: posts } = useReactQueryGet<PostType[]>(
+    "/accounting-about-page",
+    { populate: "*" },
+    ["posts"],
+  );
 
   const { mutate: createPost } = useReactQueryPost<PostType>("/posts", [
     "posts",
@@ -35,9 +37,10 @@ const HomePage = () => {
       >
         Add Data
       </button>
-      {posts?.map((item) => (
+      {JSON.stringify(posts)}
+      {/* {posts?.map((item) => (
         <Post key={item.id} id={item.id} title={item.title} />
-      ))}
+      ))} */}
     </div>
   );
 };

@@ -34,7 +34,7 @@ export const useReactQueryGet = <T>(
   const { data, isLoading, error } = useQuery<T>({
     queryFn: () =>
       axios
-        .get(`${import.meta.env.VITE_API_URL}${url}`, { params: query })
+        .get(`http://localhost:1337/api${url}`, { params: query })
         .then((res) => res.data),
     queryKey: key,
   });
