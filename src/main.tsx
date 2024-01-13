@@ -1,19 +1,19 @@
+import {
+  NotFoundRoute,
+  RootRoute,
+  Route,
+  Router,
+  RouterProvider,
+} from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import {
-  RouterProvider,
-  Router,
-  Route,
-  RootRoute,
-  NotFoundRoute,
-} from "@tanstack/react-router";
+import { QueryClient, QueryClientProvider } from "react-query";
 import App from "./App";
-import HomePage from "./routes/root/page";
-import AboutPage from "./routes/about-page/page";
 import ErrorPage from "./components/error-page";
 import NotFoundPage from "./components/not-found-page";
-import { fetchContent, fetchMultipleContent } from "./lib/data";
-import { PostType } from "./types";
+import { fetchContent } from "./lib/data";
+import AboutPage from "./routes/about-page/page";
+import HomePage from "./routes/root/page";
 
 const rootRoute = new RootRoute({
   component: () => <App />,
@@ -23,9 +23,8 @@ const indexRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/",
   component: () => <HomePage />,
-  loader: () => fetchMultipleContent(),
   pendingComponent: () => <>loading...</>,
-  errorComponent: () => <ErrorPage />
+  errorComponent: () => <ErrorPage />,
 });
 
 const aboutRoute = new Route({
@@ -34,7 +33,7 @@ const aboutRoute = new Route({
   component: () => <AboutPage />,
   loader: () => fetchContent("/posts", null),
   pendingComponent: () => <>loading...</>,
-  errorComponent: () => <ErrorPage />
+  errorComponent: () => <ErrorPage />,
 });
 
 const notFoundRoute = new NotFoundRoute({
@@ -45,6 +44,7 @@ const notFoundRoute = new NotFoundRoute({
 const routeTree = rootRoute.addChildren([indexRoute, aboutRoute]);
 
 const router = new Router({ routeTree, notFoundRoute });
+const queryClient = new QueryClient();
 
 declare module "@tanstack/react-router" {
   interface Register {
@@ -54,6 +54,8 @@ declare module "@tanstack/react-router" {
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  </StrictMode>,
 );

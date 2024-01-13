@@ -1,4 +1,5 @@
 import { useLoaderData } from "@tanstack/react-router";
+
 import { PostType } from "@/types";
 
 const AboutPage = () => {

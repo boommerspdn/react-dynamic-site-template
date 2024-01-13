@@ -1,8 +1,6 @@
 export type PostType = {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
+  id?: string;
+  title?: string;
 };
 
 export type CommentType = {
