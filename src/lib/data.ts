@@ -31,25 +31,36 @@ export const useReactQueryGet = <T>(
   query: object | null | undefined,
   key: Array<string>,
 ) => {
-  return useQuery<T>({
+  const { data, isLoading, error } = useQuery<T>({
     queryFn: () =>
       axios
         .get(`${import.meta.env.VITE_API_URL}${url}`, { params: query })
         .then((res) => res.data),
     queryKey: key,
   });
+
+  return {
+    data,
+    isLoading,
+    error,
+  };
 };
 
 export const useReactQueryPost = <T>(url: string, key: Array<string>) => {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (dataToPost: T) =>
       axios.post(`${import.meta.env.VITE_API_URL}${url}`, dataToPost),
     onSettled: async () => {
       return await queryClient.invalidateQueries({ queryKey: key });
     },
   });
+
+  return {
+    mutate,
+    isLoading,
+  };
 };
 
 export const useReactQueryPut = <T>(
@@ -59,13 +70,18 @@ export const useReactQueryPut = <T>(
 ) => {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (dataToPost: T) =>
       axios.put(`${import.meta.env.VITE_API_URL}${url}/${id}`, dataToPost),
     onSettled: async () => {
       return await queryClient.invalidateQueries({ queryKey: key });
     },
   });
+
+  return {
+    mutate,
+    isLoading,
+  };
 };
 
 export const useReactQueryDelete = (
@@ -75,11 +91,16 @@ export const useReactQueryDelete = (
 ) => {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: () =>
       axios.delete(`${import.meta.env.VITE_API_URL}${url}/${id}`),
     onSettled: async () => {
       return await queryClient.invalidateQueries({ queryKey: key });
     },
   });
+
+  return {
+    mutate,
+    isLoading,
+  };
 };
