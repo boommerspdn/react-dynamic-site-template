@@ -1,5 +1,4 @@
 import { CommentType, PostType } from "@/types";
-import { useLoaderData } from "@tanstack/react-router";
 
 type LoaderDataDefault = {
   comment: CommentType[];
@@ -7,16 +6,7 @@ type LoaderDataDefault = {
 };
 
 const HomePage = () => {
-  const { comment, post }: LoaderDataDefault = useLoaderData({ from: "/" });
-  console.log(comment);
-  console.log(post);
-
-  return (
-    <div className="flex pt-2">
-      {JSON.stringify(comment)}
-      <div>{JSON.stringify(post)}</div>
-    </div>
-  );
+  return <div className="flex pt-2">hewwo</div>;
 };
 
 export default HomePage;
